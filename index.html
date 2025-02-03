@@ -54,9 +54,31 @@
             color: red;
             animation: fall 5s linear infinite;
         }
+        .calendly-link {
+            display: none;
+            background-color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: red;
+            font-weight: bold;
+            margin-top: 20px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            position: relative;
+        }
+        .arrow {
+            position: absolute;
+            font-size: 40px;
+            color: red;
+            animation: point 1.5s infinite;
+        }
         @keyframes fall {
             0% { transform: translateY(-100px); opacity: 1; }
             100% { transform: translateY(100vh); opacity: 0; }
+        }
+        @keyframes point {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
     </style>
 </head>
@@ -68,11 +90,15 @@
             <button class="yes" onclick="handleYesClick()">Yes</button>
             <button class="no" id="noButton" onclick="handleNoClick()">No</button>
         </div>
+        <a href="https://calendly.com/vncemnl1113/can-you-be-my-valentines?month=2025-02" 
+           class="calendly-link" 
+           id="calendlyLink"
+           target="_blank">Schedule Our Date! ❤️</a>
     </div>
 
     <script>
         let imageIndex = 1;
-        const totalImages = 4; // Total images for "No" clicks (image2.png to image5.png)
+        const totalImages = 4;
 
         function handleNoClick() {
             moveNoButtonRandomly();
@@ -81,25 +107,45 @@
 
         function moveNoButtonRandomly() {
             let noButton = document.getElementById("noButton");
-            // Generate random positions within the screen
             const randomX = Math.random() * (window.innerWidth - noButton.offsetWidth);
             const randomY = Math.random() * (window.innerHeight - noButton.offsetHeight);
-            noButton.style.position = "absolute";
             noButton.style.left = `${randomX}px`;
             noButton.style.top = `${randomY}px`;
         }
 
         function changeImage() {
-            imageIndex = (imageIndex % totalImages) + 1; // Cycle through images 2-5
-            document.getElementById("valentineImage").src = `image${imageIndex + 1}.png`; // Start from image2.png
+            imageIndex = (imageIndex % totalImages) + 1;
+            document.getElementById("valentineImage").src = `image${imageIndex + 1}.png`;
         }
 
         function handleYesClick() {
-            // Change image to image6.png
             document.getElementById("valentineImage").src = "image6.png";
-
-            // Show hearts pouring from the top
+            document.getElementById("calendlyLink").style.display = "inline-block";
             showHearts();
+            addDirectionalArrows();
+        }
+
+        function addDirectionalArrows() {
+            // Add animated arrows pointing to the link
+            const link = document.getElementById("calendlyLink");
+            const linkRect = link.getBoundingClientRect();
+
+            // Create left arrow
+            const arrowLeft = document.createElement("div");
+            arrowLeft.classList.add("arrow");
+            arrowLeft.innerHTML = "➔";
+            arrowLeft.style.left = `${linkRect.left - 50}px`;
+            arrowLeft.style.top = `${linkRect.top + 15}px`;
+            arrowLeft.style.transform = "rotate(180deg)";
+            document.body.appendChild(arrowLeft);
+
+            // Create right arrow
+            const arrowRight = document.createElement("div");
+            arrowRight.classList.add("arrow");
+            arrowRight.innerHTML = "➔";
+            arrowRight.style.left = `${linkRect.right + 10}px`;
+            arrowRight.style.top = `${linkRect.top + 15}px`;
+            document.body.appendChild(arrowRight);
         }
 
         function showHearts() {
@@ -107,10 +153,10 @@
                 let heart = document.createElement("div");
                 heart.classList.add("heart");
                 heart.innerHTML = "❤️";
-                heart.style.left = Math.random() * 100 + "vw"; // Random horizontal position
-                heart.style.animationDuration = Math.random() * 2 + 3 + "s"; // Random fall speed
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = Math.random() * 2 + 3 + "s";
                 document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 5000); // Remove hearts after animation
+                setTimeout(() => heart.remove(), 5000);
             }
         }
     </script>
