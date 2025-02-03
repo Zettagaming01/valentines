@@ -23,8 +23,9 @@
             height: 70vh;
         }
         img {
-            width: 200px;
+            width: 300px;
             height: auto;
+            border-radius: 10px;
         }
         .buttons {
             margin-top: 20px;
@@ -49,9 +50,9 @@
         }
         .heart {
             position: absolute;
-            font-size: 24px;
+            font-size: 30px;
             color: red;
-            animation: fall 3s linear infinite;
+            animation: fall 5s linear infinite;
         }
         @keyframes fall {
             0% { transform: translateY(-100px); opacity: 1; }
@@ -62,7 +63,7 @@
 <body>
     <h1>Will you be my Valentine? ❤️</h1>
     <div class="container">
-        <img src="https://i.imgur.com/8yKzAkT.png" alt="Cute Dog with Heart">
+        <img src="dogwithflower.webp" alt="Cute Dog with Heart">
         <div class="buttons">
             <button class="yes" onclick="showHearts()">Yes</button>
             <button class="no" onclick="moveNoButton()">No</button>
@@ -75,22 +76,22 @@
         function moveNoButton() {
             let noButton = document.querySelector(".no");
             if (moveLeft) {
-                noButton.style.transform = "translateX(-100px)";
+                noButton.style.transform = "translateX(-150px)";
             } else {
-                noButton.style.transform = "translateX(100px)";
+                noButton.style.transform = "translateX(150px)";
             }
             moveLeft = !moveLeft;
         }
 
         function showHearts() {
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 50; i++) { // Increased heart count
                 let heart = document.createElement("div");
                 heart.classList.add("heart");
                 heart.innerHTML = "❤️";
                 heart.style.left = Math.random() * 100 + "vw";
                 heart.style.animationDuration = Math.random() * 2 + 3 + "s";
                 document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 3000);
+                setTimeout(() => heart.remove(), 5000);
             }
         }
     </script>
