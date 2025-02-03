@@ -46,7 +46,7 @@
             background-color: white;
             color: red;
             border: 1px solid red;
-            position: relative;
+            position: absolute;
         }
         .heart {
             position: absolute;
@@ -66,28 +66,27 @@
         <img id="valentineImage" src="image1.png" alt="Cute Dog with Heart">
         <div class="buttons">
             <button class="yes" onclick="handleYesClick()">Yes</button>
-            <button class="no" onclick="handleNoClick()">No</button>
+            <button class="no" id="noButton" onclick="handleNoClick()">No</button>
         </div>
     </div>
 
     <script>
-        let moveLeft = true;
         let imageIndex = 1;
-        const totalImages = 5; // Total images for "No" clicks
+        const totalImages = 4; // Total images for "No" clicks (image2.png to image5.png)
 
         function handleNoClick() {
-            moveNoButton();
+            moveNoButtonRandomly();
             changeImage();
         }
 
-        function moveNoButton() {
-            let noButton = document.querySelector(".no");
-            if (moveLeft) {
-                noButton.style.transform = "translateX(-150px)";
-            } else {
-                noButton.style.transform = "translateX(150px)";
-            }
-            moveLeft = !moveLeft;
+        function moveNoButtonRandomly() {
+            let noButton = document.getElementById("noButton");
+            // Generate random positions within the screen
+            const randomX = Math.random() * (window.innerWidth - noButton.offsetWidth);
+            const randomY = Math.random() * (window.innerHeight - noButton.offsetHeight);
+            noButton.style.position = "absolute";
+            noButton.style.left = `${randomX}px`;
+            noButton.style.top = `${randomY}px`;
         }
 
         function changeImage() {
