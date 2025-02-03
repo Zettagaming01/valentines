@@ -65,15 +65,20 @@
     <div class="container">
         <img id="valentineImage" src="image1.png" alt="Cute Dog with Heart">
         <div class="buttons">
-            <button class="yes" onclick="showHearts()">Yes</button>
-            <button class="no" onclick="moveNoButton(); changeImage();">No</button>
+            <button class="yes" onclick="handleYesClick()">Yes</button>
+            <button class="no" onclick="handleNoClick()">No</button>
         </div>
     </div>
 
     <script>
         let moveLeft = true;
         let imageIndex = 1;
-        const totalImages = 10;
+        const totalImages = 5; // Total images for "No" clicks
+
+        function handleNoClick() {
+            moveNoButton();
+            changeImage();
+        }
 
         function moveNoButton() {
             let noButton = document.querySelector(".no");
@@ -86,8 +91,16 @@
         }
 
         function changeImage() {
-            imageIndex = (imageIndex % totalImages) + 1;
-            document.getElementById("valentineImage").src = `image${imageIndex}.png`;
+            imageIndex = (imageIndex % totalImages) + 1; // Cycle through images 2-5
+            document.getElementById("valentineImage").src = `image${imageIndex + 1}.png`; // Start from image2.png
+        }
+
+        function handleYesClick() {
+            // Change image to image6.png
+            document.getElementById("valentineImage").src = "image6.png";
+
+            // Show hearts pouring from the top
+            showHearts();
         }
 
         function showHearts() {
@@ -95,10 +108,10 @@
                 let heart = document.createElement("div");
                 heart.classList.add("heart");
                 heart.innerHTML = "❤️";
-                heart.style.left = Math.random() * 100 + "vw";
-                heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+                heart.style.left = Math.random() * 100 + "vw"; // Random horizontal position
+                heart.style.animationDuration = Math.random() * 2 + 3 + "s"; // Random fall speed
                 document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 5000);
+                setTimeout(() => heart.remove(), 5000); // Remove hearts after animation
             }
         }
     </script>
