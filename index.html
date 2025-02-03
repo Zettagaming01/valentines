@@ -63,15 +63,17 @@
 <body>
     <h1>Will you be my Valentine? ❤️</h1>
     <div class="container">
-        <img src="dogwithflower.png" alt="Cute Dog with Heart">
+        <img id="valentineImage" src="image1.png" alt="Cute Dog with Heart">
         <div class="buttons">
             <button class="yes" onclick="showHearts()">Yes</button>
-            <button class="no" onclick="moveNoButton()">No</button>
+            <button class="no" onclick="moveNoButton(); changeImage();">No</button>
         </div>
     </div>
 
     <script>
         let moveLeft = true;
+        let imageIndex = 1;
+        const totalImages = 10;
 
         function moveNoButton() {
             let noButton = document.querySelector(".no");
@@ -83,8 +85,13 @@
             moveLeft = !moveLeft;
         }
 
+        function changeImage() {
+            imageIndex = (imageIndex % totalImages) + 1;
+            document.getElementById("valentineImage").src = `image${imageIndex}.png`;
+        }
+
         function showHearts() {
-            for (let i = 0; i < 50; i++) { // Increased heart count
+            for (let i = 0; i < 50; i++) {
                 let heart = document.createElement("div");
                 heart.classList.add("heart");
                 heart.innerHTML = "❤️";
